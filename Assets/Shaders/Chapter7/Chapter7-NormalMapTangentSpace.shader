@@ -2,11 +2,17 @@
 
 Shader "Unity Shaders Book/Chapter 7/Normal Map In Tangent Space" {
 	Properties {
+		// 整体色调
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// MainTex 主纹理
 		_MainTex ("Main Tex", 2D) = "white" {}
+		// BumpMap 法线纹理
 		_BumpMap ("Normal Map", 2D) = "bump" {}
+		// BumpScale 控制凹凸程度
 		_BumpScale ("Bump Scale", Float) = 1.0
+		// Specular 控制材质的高光反射颜色
 		_Specular ("Specular", Color) = (1, 1, 1, 1)
+		// Gloss 控制高光区域的大小
 		_Gloss ("Gloss", Range(8.0, 256)) = 20
 	}
 	SubShader {
@@ -79,13 +85,16 @@ Shader "Unity Shaders Book/Chapter 7/Normal Map In Tangent Space" {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
 				
+				// xy 分量存储 _MainTex 纹理坐标
 				o.uv.xy = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+				// zw 分量存储 _BumpMap 纹理坐标
 				o.uv.zw = v.texcoord.xy * _BumpMap_ST.xy + _BumpMap_ST.zw;
 
 				///
 				/// Note that the code below can handle both uniform and non-uniform scales
 				///
 
+				// 先转换为世界空间坐标，再转换为切线空间坐标
 				// Construct a matrix that transforms a point/vector from tangent space to world space
 				fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);  
 				fixed3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);  
@@ -110,18 +119,20 @@ Shader "Unity Shaders Book/Chapter 7/Normal Map In Tangent Space" {
 				///
 				/// Note that the code below can only handle uniform scales, not including non-uniform scales
 				/// 
-
+				/*
+				// 直接转换为切线空间坐标
 				// Compute the binormal
-//				float3 binormal = cross( normalize(v.normal), normalize(v.tangent.xyz) ) * v.tangent.w;
-//				// Construct a matrix which transform vectors from object space to tangent space
-//				float3x3 rotation = float3x3(v.tangent.xyz, binormal, v.normal);
+				float3 binormal = cross( normalize(v.normal), normalize(v.tangent.xyz) ) * v.tangent.w;
+				// Construct a matrix which transform vectors from object space to tangent space
+				float3x3 rotation = float3x3(v.tangent.xyz, binormal, v.normal);
 				// Or just use the built-in macro
-//				TANGENT_SPACE_ROTATION;
-//				
-//				// Transform the light direction from object space to tangent space
-//				o.lightDir = mul(rotation, normalize(ObjSpaceLightDir(v.vertex))).xyz;
-//				// Transform the view direction from object space to tangent space
-//				o.viewDir = mul(rotation, normalize(ObjSpaceViewDir(v.vertex))).xyz;
+				TANGENT_SPACE_ROTATION;
+				
+				// Transform the light direction from object space to tangent space
+				o.lightDir = mul(rotation, normalize(ObjSpaceLightDir(v.vertex))).xyz;
+				// Transform the view direction from object space to tangent space
+				o.viewDir = mul(rotation, normalize(ObjSpaceViewDir(v.vertex))).xyz;
+				*/
 				
 				return o;
 			}

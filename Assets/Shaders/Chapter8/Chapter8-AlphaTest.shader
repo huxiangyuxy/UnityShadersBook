@@ -3,8 +3,11 @@
 
 Shader "Unity Shaders Book/Chapter 8/Alpha Test" {
 	Properties {
+		// 材质颜色
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// 主纹理
 		_MainTex ("Main Tex", 2D) = "white" {}
+		// 透明度测试时使用的判断条件
 		_Cutoff ("Alpha Cutoff", Range(0, 1)) = 0.5
 	}
 	SubShader {

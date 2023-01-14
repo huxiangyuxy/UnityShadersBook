@@ -3,8 +3,11 @@
 
 Shader "Unity Shaders Book/Chapter 8/Alpha Blend" {
 	Properties {
+		// 材质颜色
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// 主纹理
 		_MainTex ("Main Tex", 2D) = "white" {}
+		// 在透明纹理的基础上控制整体的透明度
 		_AlphaScale ("Alpha Scale", Range(0, 1)) = 1
 	}
 	SubShader {
@@ -66,6 +69,7 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend" {
 				
 				fixed3 diffuse = _LightColor0.rgb * albedo * max(0, dot(worldNormal, worldLightDir));
 				
+				// 设置透明通道为 texColor.a * _AlphaScale
 				return fixed4(ambient + diffuse, texColor.a * _AlphaScale);
 			}
 			

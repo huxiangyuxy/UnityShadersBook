@@ -14,32 +14,32 @@ Shader "Unity Shaders Book/Chapter 8/Blend Operations 1" {
 			
 			ZWrite Off
 			
-//			// Normal
-//			Blend SrcAlpha OneMinusSrcAlpha
-//			
-//			// Soft Additive
-//			Blend OneMinusDstColor One
-//			
-//			// Multiply
-			Blend DstColor Zero
-//			
-//			// 2x Multiply
-//			Blend DstColor SrcColor
-//			
-//			// Darken
-//			BlendOp Min
-//			Blend One One	// When using Min operation, these factors are ignored
-//			
-//			//  Lighten
-//			BlendOp Max
-//			Blend One One // When using Max operation, these factors are ignored
-//			
-//			// Screen
-//			Blend OneMinusDstColor One
+			// Normal
+			// Blend SrcAlpha OneMinusSrcAlpha
+			
+			// Soft Additive
+			// Blend OneMinusDstColor One
+			
+			// Multiply
+			// Blend DstColor Zero
+			
+			// 2x Multiply
+			// Blend DstColor SrcColor
+			
+			// Darken
+			// BlendOp Min
+			// Blend One One	// When using Min operation, these factors are ignored
+			
+			//  Lighten
+			// BlendOp Max
+			// Blend One One // When using Max operation, these factors are ignored
+			
+			// Screen
+			// Blend OneMinusDstColor One
 			// Or
-//			Blend One OneMinusSrcColor
-//			
-//			// Linear Dodge
+			// Blend One OneMinusSrcColor
+			
+			// Linear Dodge
 			Blend One One
 			
 			CGPROGRAM

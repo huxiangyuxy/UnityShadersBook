@@ -3,10 +3,12 @@
 
 Shader "Unity Shaders Book/Chapter 6/Diffuse Pixel-Level" {
 	Properties {
+		// Diffuse 控制材质的漫反射颜色
 		_Diffuse ("Diffuse", Color) = (1, 1, 1, 1)
 	}
 	SubShader {
 		Pass { 
+			// LightMode 定义该 Pass 在 Unity 的光照流水线中的角色
 			Tags { "LightMode"="ForwardBase" }
 		
 			CGPROGRAM
@@ -51,6 +53,7 @@ Shader "Unity Shaders Book/Chapter 6/Diffuse Pixel-Level" {
 				// Compute diffuse term
 				fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(worldNormal, worldLightDir));
 				
+				// 环境光+漫反射光
 				fixed3 color = ambient + diffuse;
 				
 				return fixed4(color, 1.0);

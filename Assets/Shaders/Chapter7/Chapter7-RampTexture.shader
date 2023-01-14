@@ -46,6 +46,8 @@ Shader "Unity Shaders Book/Chapter 7/Ramp Texture" {
 				
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 				
+				// Transforms 2D UV by scale/bias property
+				// #define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw)
 				o.uv = TRANSFORM_TEX(v.texcoord, _RampTex);
 				
 				return o;

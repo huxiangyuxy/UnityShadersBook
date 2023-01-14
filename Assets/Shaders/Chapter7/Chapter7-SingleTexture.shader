@@ -3,13 +3,18 @@
 
 Shader "Unity Shaders Book/Chapter 7/Single Texture" {
 	Properties {
+		// Color 整体色调
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// MainTex 主纹理
 		_MainTex ("Main Tex", 2D) = "white" {}
+		// Specular 控制材质的高光反射颜色
 		_Specular ("Specular", Color) = (1, 1, 1, 1)
+		// Gloss 控制高光区域的大小
 		_Gloss ("Gloss", Range(8.0, 256)) = 20
 	}
 	SubShader {		
 		Pass { 
+			// LightMode 定义该 Pass 在 Unity 的光照流水线中的角色
 			Tags { "LightMode"="ForwardBase" }
 		
 			CGPROGRAM
@@ -48,7 +53,7 @@ Shader "Unity Shaders Book/Chapter 7/Single Texture" {
 				
 				o.uv = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
 				// Or just call the built-in function
-//				o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+				// o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
 				
 				return o;
 			}
@@ -68,6 +73,7 @@ Shader "Unity Shaders Book/Chapter 7/Single Texture" {
 				fixed3 halfDir = normalize(worldLightDir + viewDir);
 				fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(worldNormal, halfDir)), _Gloss);
 				
+				// 环境光+漫反射光+高光反射
 				return fixed4(ambient + diffuse + specular, 1.0);
 			}
 			

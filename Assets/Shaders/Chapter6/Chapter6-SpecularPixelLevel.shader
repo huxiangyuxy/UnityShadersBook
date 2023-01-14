@@ -4,12 +4,16 @@
 
 Shader "Unity Shaders Book/Chapter 6/Specular Pixel-Level" {
 	Properties {
+		// Diffuse 控制材质的漫反射颜色
 		_Diffuse ("Diffuse", Color) = (1, 1, 1, 1)
+		// Specular 控制材质的高光反射颜色
 		_Specular ("Specular", Color) = (1, 1, 1, 1)
+		// Gloss 控制高光区域的大小
 		_Gloss ("Gloss", Range(8.0, 256)) = 20
 	}
 	SubShader {
 		Pass { 
+			// LightMode 定义该 Pass 在 Unity 的光照流水线中的角色
 			Tags { "LightMode"="ForwardBase" }
 		
 			CGPROGRAM
@@ -64,6 +68,7 @@ Shader "Unity Shaders Book/Chapter 6/Specular Pixel-Level" {
 				// Compute specular term
 				fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(reflectDir, viewDir)), _Gloss);
 				
+				// 环境光+漫反射光+高光反射
 				return fixed4(ambient + diffuse + specular, 1.0);
 			}
 			

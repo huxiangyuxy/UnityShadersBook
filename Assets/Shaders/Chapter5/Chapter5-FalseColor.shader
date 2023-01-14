@@ -50,7 +50,7 @@ Shader "Unity Shaders Book/Chapter 5/False Color" {
 				o.color.a = 1.0;
 				
 				// Visualize vertex color
-//				o.color = v.color;
+				// o.color = v.color;
 				
 				return o;
 			}

@@ -2,13 +2,21 @@
 
 Shader "Unity Shaders Book/Chapter 7/Mask Texture" {
 	Properties {
+		// Color 整体色调
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// MainTex 主纹理
 		_MainTex ("Main Tex", 2D) = "white" {}
+		// BumpMap 法线纹理
 		_BumpMap ("Normal Map", 2D) = "bump" {}
+		// BumpScale 控制凹凸程度
 		_BumpScale("Bump Scale", Float) = 1.0
+		// SpecularMask 高光反射遮罩纹理
 		_SpecularMask ("Specular Mask", 2D) = "white" {}
+		// SpecularScale 控制遮罩影响的系数
 		_SpecularScale ("Specular Scale", Float) = 1.0
+		// Specular 控制材质的高光反射颜色
 		_Specular ("Specular", Color) = (1, 1, 1, 1)
+		// Gloss 控制高光区域的大小
 		_Gloss ("Gloss", Range(8.0, 256)) = 20
 	}
 	SubShader {
