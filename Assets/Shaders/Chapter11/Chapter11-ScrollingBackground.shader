@@ -2,10 +2,15 @@
 
 Shader "Unity Shaders Book/Chapter 11/Scrolling Background" {
 	Properties {
+		// 第一层（较远）的背景纹理
 		_MainTex ("Base Layer (RGB)", 2D) = "white" {}
+		// 第二层（较近）的背景纹理
 		_DetailTex ("2nd Layer (RGB)", 2D) = "white" {}
+		// 第一层水平滚动速度
 		_ScrollX ("Base layer Scroll Speed", Float) = 1.0
+		// 第二层水平滚动速度
 		_Scroll2X ("2nd layer Scroll Speed", Float) = 1.0
+		// 纹理的整体亮度
 		_Multiplier ("Layer Multiplier", Float) = 1
 	}
 	SubShader {

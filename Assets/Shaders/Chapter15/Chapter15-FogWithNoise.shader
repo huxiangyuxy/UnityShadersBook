@@ -3,13 +3,19 @@
 Shader "Unity Shaders Book/Chapter 15/Fog With Noise" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
+  	// 雾的浓度
 		_FogDensity ("Fog Density", Float) = 1.0
+  	// 雾的颜色
 		_FogColor ("Fog Color", Color) = (1, 1, 1, 1)
+  	// 雾的起始高度和终止高度
 		_FogStart ("Fog Start", Float) = 0.0
 		_FogEnd ("Fog End", Float) = 1.0
+		// 噪声纹理
 		_NoiseTex ("Noise Texture", 2D) = "white" {}
+		// 噪声纹理在X方向和Y方向上的平移速度
 		_FogXSpeed ("Fog Horizontal Speed", Float) = 0.1
 		_FogYSpeed ("Fog Vertical Speed", Float) = 0.1
+		// 控制噪声程度
 		_NoiseAmount ("Noise Amount", Float) = 1
 	}
 	SubShader {
@@ -17,6 +23,7 @@ Shader "Unity Shaders Book/Chapter 15/Fog With Noise" {
 		
 		#include "UnityCG.cginc"
 		
+		// cs脚本传递
 		float4x4 _FrustumCornersRay;
 		
 		sampler2D _MainTex;

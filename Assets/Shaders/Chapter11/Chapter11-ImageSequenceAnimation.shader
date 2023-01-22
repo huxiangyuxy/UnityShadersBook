@@ -2,11 +2,16 @@
 
 Shader "Unity Shaders Book/Chapter 11/Image Sequence Animation" {
 	Properties {
+		// 颜色
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// 关键帧图像纹理
 		_MainTex ("Image Sequence", 2D) = "white" {}
-    	_HorizontalAmount ("Horizontal Amount", Float) = 4
-    	_VerticalAmount ("Vertical Amount", Float) = 4
-    	_Speed ("Speed", Range(1, 100)) = 30
+		// 水平方向关键帧图像个数
+    _HorizontalAmount ("Horizontal Amount", Float) = 4
+		// 竖直方向关键帧图像个数
+    _VerticalAmount ("Vertical Amount", Float) = 4
+		// 序列帧动画播放速度
+    _Speed ("Speed", Range(1, 100)) = 30
 	}
 	SubShader {
 		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
@@ -14,6 +19,7 @@ Shader "Unity Shaders Book/Chapter 11/Image Sequence Animation" {
 		Pass {
 			Tags { "LightMode"="ForwardBase" }
 			
+			// 序列帧包含透明通道，关闭深度写入，开启混合模式
 			ZWrite Off
 			Blend SrcAlpha OneMinusSrcAlpha
 			
@@ -53,9 +59,9 @@ Shader "Unity Shaders Book/Chapter 11/Image Sequence Animation" {
 				float row = floor(time / _HorizontalAmount);
 				float column = time - row * _HorizontalAmount;
 				
-//				half2 uv = float2(i.uv.x /_HorizontalAmount, i.uv.y / _VerticalAmount);
-//				uv.x += column / _HorizontalAmount;
-//				uv.y -= row / _VerticalAmount;
+				// half2 uv = float2(i.uv.x /_HorizontalAmount, i.uv.y / _VerticalAmount);
+				// uv.x += column / _HorizontalAmount;
+				// uv.y -= row / _VerticalAmount;
 				half2 uv = i.uv + half2(column, -row);
 				uv.x /=  _HorizontalAmount;
 				uv.y /= _VerticalAmount;

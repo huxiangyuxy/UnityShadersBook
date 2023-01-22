@@ -19,6 +19,7 @@ Shader "Unity Shaders Book/Chapter 12/Gaussian Blur" {
 			half2 uv[5]: TEXCOORD0;
 		};
 		  
+		// 竖直方向
 		v2f vertBlurVertical(appdata_img v) {
 			v2f o;
 			o.pos = UnityObjectToClipPos(v.vertex);
@@ -34,6 +35,7 @@ Shader "Unity Shaders Book/Chapter 12/Gaussian Blur" {
 			return o;
 		}
 		
+		// 水平方向
 		v2f vertBlurHorizontal(appdata_img v) {
 			v2f o;
 			o.pos = UnityObjectToClipPos(v.vertex);

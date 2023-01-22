@@ -2,13 +2,16 @@
 
 Shader "Unity Shaders Book/Chapter 12/Brightness Saturation And Contrast" {
 	Properties {
+		// Graphics.Blit(src, dest, material) 将第一个参数传递给 Shader 中名为 _MainTex的属性
 		_MainTex ("Base (RGB)", 2D) = "white" {}
+		// 亮度、饱和度、对比度：脚本传递
 		_Brightness ("Brightness", Float) = 1
 		_Saturation("Saturation", Float) = 1
 		_Contrast("Contrast", Float) = 1
 	}
 	SubShader {
 		Pass {  
+			// 屏幕后处理 Shader 的标配，防止对其他物体产生影响
 			ZTest Always Cull Off ZWrite Off
 			
 			CGPROGRAM  

@@ -3,10 +3,15 @@
 
 Shader "Unity Shaders Book/Chapter 10/Glass Refraction" {
 	Properties {
+		// 材质纹理
 		_MainTex ("Main Tex", 2D) = "white" {}
+		// 法线纹理
 		_BumpMap ("Normal Map", 2D) = "bump" {}
+		// 模拟反射的环境纹理
 		_Cubemap ("Environment Cubemap", Cube) = "_Skybox" {}
+		// 控制模拟折射时图像的扭曲程度
 		_Distortion ("Distortion", Range(0, 100)) = 10
+		// 控制折射程度，0只包含反射效果，1只包含折射效果
 		_RefractAmount ("Refract Amount", Range(0.0, 1.0)) = 1.0
 	}
 	SubShader {
@@ -33,6 +38,7 @@ Shader "Unity Shaders Book/Chapter 10/Glass Refraction" {
 			float _Distortion;
 			fixed _RefractAmount;
 			sampler2D _RefractionTex;
+			// xxx_TextlSize 是 xxx 纹理对应的每个纹素的大小
 			float4 _RefractionTex_TexelSize;
 			
 			struct a2v {
@@ -55,8 +61,10 @@ Shader "Unity Shaders Book/Chapter 10/Glass Refraction" {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
 				
+				// 被抓取图像的采样坐标
 				o.scrPos = ComputeGrabScreenPos(o.pos);
 				
+				// 计算 _MainTex 和 _BumpMap 的采样坐标
 				o.uv.xy = TRANSFORM_TEX(v.texcoord, _MainTex);
 				o.uv.zw = TRANSFORM_TEX(v.texcoord, _BumpMap);
 				

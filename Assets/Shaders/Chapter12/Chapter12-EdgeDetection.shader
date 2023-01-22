@@ -19,6 +19,7 @@ Shader "Unity Shaders Book/Chapter 12/Edge Detection" {
 			#pragma fragment fragSobel
 			
 			sampler2D _MainTex;  
+			// xxx_TextlSize 是 xxx 纹理对应的每个纹素的大小
 			uniform half4 _MainTex_TexelSize;
 			fixed _EdgeOnly;
 			fixed4 _EdgeColor;
@@ -75,6 +76,7 @@ Shader "Unity Shaders Book/Chapter 12/Edge Detection" {
 			}
 			
 			fixed4 fragSobel(v2f i) : SV_Target {
+				// 计算当前像素的梯度值 edge
 				half edge = Sobel(i);
 				
 				fixed4 withEdgeColor = lerp(_EdgeColor, tex2D(_MainTex, i.uv[4]), edge);

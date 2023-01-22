@@ -2,7 +2,9 @@
 
 Shader "Unity Shaders Book/Chapter 13/Motion Blur With Depth Texture" {
 	Properties {
+		// 输入的渲染纹理
 		_MainTex ("Base (RGB)", 2D) = "white" {}
+		// 模糊参数
 		_BlurSize ("Blur Size", Float) = 1.0
 	}
 	SubShader {
@@ -12,7 +14,7 @@ Shader "Unity Shaders Book/Chapter 13/Motion Blur With Depth Texture" {
 		
 		sampler2D _MainTex;
 		half4 _MainTex_TexelSize;
-		sampler2D _CameraDepthTexture;
+		sampler2D _CameraDepthTexture; // 深度纹理
 		float4x4 _CurrentViewProjectionInverseMatrix;
 		float4x4 _PreviousViewProjectionMatrix;
 		half _BlurSize;
@@ -30,6 +32,7 @@ Shader "Unity Shaders Book/Chapter 13/Motion Blur With Depth Texture" {
 			o.uv = v.texcoord;
 			o.uv_depth = v.texcoord;
 			
+			// DirectX 平台
 			#if UNITY_UV_STARTS_AT_TOP
 			if (_MainTex_TexelSize.y < 0)
 				o.uv_depth.y = 1 - o.uv_depth.y;
@@ -40,6 +43,7 @@ Shader "Unity Shaders Book/Chapter 13/Motion Blur With Depth Texture" {
 		
 		fixed4 frag(v2f i) : SV_Target {
 			// Get the depth buffer value at this pixel.
+			// SAMPLE_DEPTH_TEXTURE 采样得到深度值 d
 			float d = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv_depth);
 			// H is the viewport position at this pixel in the range -1 to 1.
 			float4 H = float4(i.uv.x * 2 - 1, i.uv.y * 2 - 1, d * 2 - 1, 1);

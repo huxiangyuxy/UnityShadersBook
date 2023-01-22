@@ -3,12 +3,18 @@
 
 Shader "Unity Shaders Book/Chapter 15/Water Wave" {
 	Properties {
+		// 水面颜色
 		_Color ("Main Color", Color) = (0, 0.15, 0.115, 1)
+		// 水面波纹材质纹理
 		_MainTex ("Base (RGB)", 2D) = "white" {}
+		// 由噪声纹理生成的法线纹理
 		_WaveMap ("Wave Map", 2D) = "bump" {}
+		// 模拟反射的立方体纹理
 		_Cubemap ("Environment Cubemap", Cube) = "_Skybox" {}
+		// 法线纹理在X方向和Y方向上的平移速度
 		_WaveXSpeed ("Wave Horizontal Speed", Range(-0.1, 0.1)) = 0.01
 		_WaveYSpeed ("Wave Vertical Speed", Range(-0.1, 0.1)) = 0.01
+		// 控制模拟折射时图像的扭曲程度
 		_Distortion ("Distortion", Range(0, 100)) = 10
 	}
 	SubShader {

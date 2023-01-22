@@ -3,8 +3,11 @@
 
 Shader "Unity Shaders Book/Chapter 11/Billboard" {
 	Properties {
+		// 广告牌显示的透明纹理
 		_MainTex ("Main Tex", 2D) = "white" {}
+		// 颜色
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// 用于调整是固定法线或固定指向上的方向，约束垂直方向的程度
 		_VerticalBillboarding ("Vertical Restraints", Range(0, 1)) = 1 
 	}
 	SubShader {
@@ -14,6 +17,7 @@ Shader "Unity Shaders Book/Chapter 11/Billboard" {
 		Pass { 
 			Tags { "LightMode"="ForwardBase" }
 			
+			// 关闭深度写入，开启混合模式，关闭剔除功能。让广告牌的每个面都能显示
 			ZWrite Off
 			Blend SrcAlpha OneMinusSrcAlpha
 			Cull Off

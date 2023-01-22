@@ -40,7 +40,7 @@ Shader "Unity Shaders Book/Chapter 9/Shadow" {
 				float4 pos : SV_POSITION;
 				float3 worldNormal : TEXCOORD0;
 				float3 worldPos : TEXCOORD1;
-				SHADOW_COORDS(2)
+				SHADOW_COORDS(2) // 声明了一个名为 _ShadowCoord 的阴影纹理坐标变量
 			};
 			
 			v2f vert(a2v v) {
@@ -52,6 +52,7 @@ Shader "Unity Shaders Book/Chapter 9/Shadow" {
 			 	o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 			 	
 			 	// Pass shadow coordinates to pixel shader
+				// 计算 _ShadowCoord
 			 	TRANSFER_SHADOW(o);
 			 	
 			 	return o;
@@ -71,6 +72,7 @@ Shader "Unity Shaders Book/Chapter 9/Shadow" {
 
 				fixed atten = 1.0;
 				
+				// 使用 _ShadowCoord 对相关的纹理进行采样，得到阴影信息
 				fixed shadow = SHADOW_ATTENUATION(i);
 				
 				return fixed4(ambient + (diffuse + specular) * atten * shadow, 1.0);
@@ -90,7 +92,7 @@ Shader "Unity Shaders Book/Chapter 9/Shadow" {
 			// Apparently need to add this declaration
 			#pragma multi_compile_fwdadd
 			// Use the line below to add shadows for point and spot lights
-//			#pragma multi_compile_fwdadd_fullshadows
+			// #pragma multi_compile_fwdadd_fullshadows
 			
 			#pragma vertex vert
 			#pragma fragment frag

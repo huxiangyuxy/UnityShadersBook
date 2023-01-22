@@ -3,9 +3,13 @@
 
 Shader "Unity Shaders Book/Chapter 10/Reflection" {
 	Properties {
+		// 材质颜色
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// 控制反射颜色
 		_ReflectColor ("Reflection Color", Color) = (1, 1, 1, 1)
+		// 控制材质的反射程度
 		_ReflectAmount ("Reflect Amount", Range(0, 1)) = 1
+		// 模拟反射的环境映射纹理
 		_Cubemap ("Reflection Cubemap", Cube) = "_Skybox" {}
 	}
 	SubShader {

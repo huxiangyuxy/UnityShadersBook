@@ -5,10 +5,15 @@ Shader "Unity Shaders Book/Chapter 14/Toon Shading" {
 	Properties {
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
 		_MainTex ("Main Tex", 2D) = "white" {}
+		// 控制漫反射色调的渐变纹理
 		_Ramp ("Ramp Texture", 2D) = "white" {}
+		// 控制轮廓线宽度
 		_Outline ("Outline", Range(0, 1)) = 0.1
+		// 轮廓线颜色
 		_OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
+		// 高光反射颜色
 		_Specular ("Specular", Color) = (1, 1, 1, 1)
+		// 高光反射使用的阈值
 		_SpecularScale ("Specular Scale", Range(0, 0.1)) = 0.01
 	}
     SubShader {
@@ -17,6 +22,7 @@ Shader "Unity Shaders Book/Chapter 14/Toon Shading" {
 		Pass {
 			NAME "OUTLINE"
 			
+			// 只渲染背面的三角面片
 			Cull Front
 			
 			CGPROGRAM
@@ -59,7 +65,8 @@ Shader "Unity Shaders Book/Chapter 14/Toon Shading" {
 		
 		Pass {
 			Tags { "LightMode"="ForwardBase" }
-			
+
+			// 只渲染正面的三角面片			
 			Cull Back
 		
 			CGPROGRAM

@@ -56,6 +56,7 @@ Shader "Unity Shaders Book/Chapter 12/Bloom" {
 			o.uv.xy = v.texcoord;		
 			o.uv.zw = v.texcoord;
 			
+			// 判断当前平台是否 DirectX 平台
 			#if UNITY_UV_STARTS_AT_TOP			
 			if (_MainTex_TexelSize.y < 0.0)
 				o.uv.w = 1.0 - o.uv.w;
@@ -80,6 +81,7 @@ Shader "Unity Shaders Book/Chapter 12/Bloom" {
 			ENDCG  
 		}
 		
+		// 声明 Pass 名称，可以直接 UsePass 使用
 		UsePass "Unity Shaders Book/Chapter 12/Gaussian Blur/GAUSSIAN_BLUR_VERTICAL"
 		
 		UsePass "Unity Shaders Book/Chapter 12/Gaussian Blur/GAUSSIAN_BLUR_HORIZONTAL"

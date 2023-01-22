@@ -18,6 +18,7 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering" {
 			CGPROGRAM
 			
 			// Apparently need to add this declaration 
+			// 保证光照变量可以正确赋值
 			#pragma multi_compile_fwdbase	
 			
 			#pragma vertex vert
@@ -55,6 +56,7 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering" {
 				fixed3 worldNormal = normalize(i.worldNormal);
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
 				
+				// 只在 Base Pass 里计算一次环境光，Add Pass 里不再进行计算
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 				
 			 	fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * max(0, dot(worldNormal, worldLightDir));
@@ -63,6 +65,7 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering" {
 			 	fixed3 halfDir = normalize(worldLightDir + viewDir);
 			 	fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(worldNormal, halfDir)), _Gloss);
 
+				// 平行灯光的衰减默认设置为1
 				fixed atten = 1.0;
 				
 				return fixed4(ambient + (diffuse + specular) * atten, 1.0);
@@ -75,11 +78,13 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering" {
 			// Pass for other pixel lights
 			Tags { "LightMode"="ForwardAdd" }
 			
+			// 叠加之前的光照结果
 			Blend One One
 		
 			CGPROGRAM
 			
 			// Apparently need to add this declaration
+			// 保证光照变量可以正确赋值
 			#pragma multi_compile_fwdadd
 			
 			#pragma vertex vert
@@ -129,8 +134,10 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering" {
 				fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(worldNormal, halfDir)), _Gloss);
 				
 				#ifdef USING_DIRECTIONAL_LIGHT
+					// 平行灯光的衰减默认设置为1
 					fixed atten = 1.0;
 				#else
+				  // 其他光源对衰减纹理 _LightTexture0 进行采样得到衰减
 					#if defined (POINT)
 				        float3 lightCoord = mul(unity_WorldToLight, float4(i.worldPos, 1)).xyz;
 				        fixed atten = tex2D(_LightTexture0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;

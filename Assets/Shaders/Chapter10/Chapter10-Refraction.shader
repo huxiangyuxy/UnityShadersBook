@@ -3,10 +3,15 @@
 
 Shader "Unity Shaders Book/Chapter 10/Refraction" {
 	Properties {
+		// 材质颜色
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// 控制折射颜色
 		_RefractColor ("Refraction Color", Color) = (1, 1, 1, 1)
+		// 控制材质的折射程度
 		_RefractAmount ("Refraction Amount", Range(0, 1)) = 1
+		// 控制材质的透射比
 		_RefractRatio ("Refraction Ratio", Range(0.1, 1)) = 0.5
+		// 模拟折射的环境映射纹理
 		_Cubemap ("Refraction Cubemap", Cube) = "_Skybox" {}
 	}
 	SubShader {

@@ -3,12 +3,18 @@
 
 Shader "Unity Shaders Book/Chapter 15/Dissolve" {
 	Properties {
+		// 控制消融程度
 		_BurnAmount ("Burn Amount", Range(0.0, 1.0)) = 0.0
+		// 控制模拟烧焦效果的线宽
 		_LineWidth("Burn Line Width", Range(0.0, 0.2)) = 0.1
+		// 漫反射纹理
 		_MainTex ("Base (RGB)", 2D) = "white" {}
+		// 法线纹理
 		_BumpMap ("Normal Map", 2D) = "bump" {}
+		// 火焰边缘的两种颜色
 		_BurnFirstColor("Burn First Color", Color) = (1, 0, 0, 1)
 		_BurnSecondColor("Burn Second Color", Color) = (1, 0, 0, 1)
+		// 噪声纹理
 		_BurnMap("Burn Map", 2D) = "white"{}
 	}
 	SubShader {

@@ -3,8 +3,11 @@
 Shader "Unity Shaders Book/Chapter 13/Fog With Depth Texture" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
+  	// 雾的浓度
 		_FogDensity ("Fog Density", Float) = 1.0
+  	// 雾的颜色
 		_FogColor ("Fog Color", Color) = (1, 1, 1, 1)
+  	// 雾的起始高度和终止高度
 		_FogStart ("Fog Start", Float) = 0.0
 		_FogEnd ("Fog End", Float) = 1.0
 	}
@@ -17,7 +20,7 @@ Shader "Unity Shaders Book/Chapter 13/Fog With Depth Texture" {
 		
 		sampler2D _MainTex;
 		half4 _MainTex_TexelSize;
-		sampler2D _CameraDepthTexture;
+		sampler2D _CameraDepthTexture;  // 深度纹理
 		half _FogDensity;
 		fixed4 _FogColor;
 		float _FogStart;

@@ -2,11 +2,17 @@
 
 Shader "Unity Shaders Book/Chapter 11/Water" {
 	Properties {
+		// 河流纹理
 		_MainTex ("Main Tex", 2D) = "white" {}
+		// 颜色
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// 水流波动的幅度
 		_Magnitude ("Distortion Magnitude", Float) = 1
+		// 水流波动的频率
  		_Frequency ("Distortion Frequency", Float) = 1
+		// 波长的倒数
  		_InvWaveLength ("Distortion Inverse Wave Length", Float) = 10
+		// 河流纹理的移动速度
  		_Speed ("Speed", Float) = 0.5
 	}
 	SubShader {
@@ -16,6 +22,7 @@ Shader "Unity Shaders Book/Chapter 11/Water" {
 		Pass {
 			Tags { "LightMode"="ForwardBase" }
 			
+			// 关闭深度写入，开启混合模式，关闭剔除功能。让水流的每个面都能显示
 			ZWrite Off
 			Blend SrcAlpha OneMinusSrcAlpha
 			Cull Off
@@ -47,6 +54,7 @@ Shader "Unity Shaders Book/Chapter 11/Water" {
 			v2f vert(a2v v) {
 				v2f o;
 				
+				// 获取顶点位移，并只对x进行位移
 				float4 offset;
 				offset.yzw = float3(0.0, 0.0, 0.0);
 				offset.x = sin(_Frequency * _Time.y + v.vertex.x * _InvWaveLength + v.vertex.y * _InvWaveLength + v.vertex.z * _InvWaveLength) * _Magnitude;

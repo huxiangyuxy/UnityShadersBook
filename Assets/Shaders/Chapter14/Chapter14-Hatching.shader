@@ -8,8 +8,10 @@
 Shader "Unity Shaders Book/Chapter 14/Hatching" {
 	Properties {
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
+		// 纹理的平铺系数
 		_TileFactor ("Tile Factor", Float) = 1
 		_Outline ("Outline", Range(0, 1)) = 0.1
+		// 6张素描纹理
 		_Hatch0 ("Hatch 0", 2D) = "white" {}
 		_Hatch1 ("Hatch 1", 2D) = "white" {}
 		_Hatch2 ("Hatch 2", 2D) = "white" {}
@@ -21,6 +23,7 @@ Shader "Unity Shaders Book/Chapter 14/Hatching" {
 	SubShader {
 		Tags { "RenderType"="Opaque" "Queue"="Geometry"}
 		
+		// 背面轮廓 Pass
 		UsePass "Unity Shaders Book/Chapter 14/Toon Shading/OUTLINE"
 		
 		Pass {

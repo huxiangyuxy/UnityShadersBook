@@ -2,51 +2,51 @@
 using System.Collections;
 
 public class MotionBlurWithDepthTexture : PostEffectsBase {
+  public Shader motionBlurShader;
+  private Material motionBlurMaterial = null;
 
-	public Shader motionBlurShader;
-	private Material motionBlurMaterial = null;
+  public Material material {
+    get {
+      motionBlurMaterial = CheckShaderAndCreateMaterial(motionBlurShader, motionBlurMaterial);
+      return motionBlurMaterial;
+    }
+  }
 
-	public Material material {  
-		get {
-			motionBlurMaterial = CheckShaderAndCreateMaterial(motionBlurShader, motionBlurMaterial);
-			return motionBlurMaterial;
-		}  
-	}
+  private Camera myCamera;
+  public Camera camera {
+    get {
+      if (myCamera == null) {
+        myCamera = GetComponent<Camera>();
+      }
+      return myCamera;
+    }
+  }
 
-	private Camera myCamera;
-	public Camera camera {
-		get {
-			if (myCamera == null) {
-				myCamera = GetComponent<Camera>();
-			}
-			return myCamera;
-		}
-	}
+  [Range(0.0f, 1.0f)]
+  public float blurSize = 0.5f;
 
-	[Range(0.0f, 1.0f)]
-	public float blurSize = 0.5f;
+  private Matrix4x4 previousViewProjectionMatrix;
 
-	private Matrix4x4 previousViewProjectionMatrix;
-	
-	void OnEnable() {
-		camera.depthTextureMode |= DepthTextureMode.Depth;
+  void OnEnable() {
+    // 获取摄像机的深度纹理
+    camera.depthTextureMode |= DepthTextureMode.Depth;
 
-		previousViewProjectionMatrix = camera.projectionMatrix * camera.worldToCameraMatrix;
-	}
-	
-	void OnRenderImage (RenderTexture src, RenderTexture dest) {
-		if (material != null) {
-			material.SetFloat("_BlurSize", blurSize);
+    previousViewProjectionMatrix = camera.projectionMatrix * camera.worldToCameraMatrix;
+  }
 
-			material.SetMatrix("_PreviousViewProjectionMatrix", previousViewProjectionMatrix);
-			Matrix4x4 currentViewProjectionMatrix = camera.projectionMatrix * camera.worldToCameraMatrix;
-			Matrix4x4 currentViewProjectionInverseMatrix = currentViewProjectionMatrix.inverse;
-			material.SetMatrix("_CurrentViewProjectionInverseMatrix", currentViewProjectionInverseMatrix);
-			previousViewProjectionMatrix = currentViewProjectionMatrix;
+  void OnRenderImage(RenderTexture src, RenderTexture dest) {
+    if (material != null) {
+      material.SetFloat("_BlurSize", blurSize);
 
-			Graphics.Blit (src, dest, material);
-		} else {
-			Graphics.Blit(src, dest);
-		}
-	}
+      material.SetMatrix("_PreviousViewProjectionMatrix", previousViewProjectionMatrix);
+      Matrix4x4 currentViewProjectionMatrix = camera.projectionMatrix * camera.worldToCameraMatrix;
+      Matrix4x4 currentViewProjectionInverseMatrix = currentViewProjectionMatrix.inverse;
+      material.SetMatrix("_CurrentViewProjectionInverseMatrix", currentViewProjectionInverseMatrix);
+      previousViewProjectionMatrix = currentViewProjectionMatrix;
+
+      Graphics.Blit(src, dest, material);
+    } else {
+      Graphics.Blit(src, dest);
+    }
+  }
 }

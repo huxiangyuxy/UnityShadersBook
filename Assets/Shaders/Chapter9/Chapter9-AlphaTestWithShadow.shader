@@ -83,5 +83,6 @@ Shader "Unity Shaders Book/Chapter 9/Alpha Test With Shadow" {
 			ENDCG
 		}
 	} 
+	// 回调为 Transparent/Cutout/VertexLit 正确的投射阴影
 	FallBack "Transparent/Cutout/VertexLit"
 }
